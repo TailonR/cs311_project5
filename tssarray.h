@@ -18,7 +18,7 @@
 #include <cstddef>
 // For std::size_t
 #include <algorithm>
-// For std::max
+// For std::max std::copy std::swap
 
 
 // *********************************************************************
