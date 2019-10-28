@@ -280,7 +280,6 @@ void TSSArray<T>::resize(size_type newsize)
         return;
     }
 
-    // TODO: WRITE THIS!!!
 }
 
 
