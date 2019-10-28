@@ -273,7 +273,7 @@ void TSSArray<T>::resize(size_type newsize)
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     else
     {
-        TSSArray<T> tempobj(newsize);
+        TSSArray tempobj(newsize);
         std::copy(this->begin(), this->end(), tempobj.begin());
         tempobj._capacity = newsize + 16;
         this->swap(tempobj);
