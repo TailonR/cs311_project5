@@ -197,7 +197,15 @@ TSSArray<T>::TSSArray(const TSSArray<T> & other)
      _size(other._size),
      _data(new value_type[other._capacity])
 {
-    std::copy(other.begin(), other.end(), begin());
+    try{
+        std::copy(other.begin(), other.end(), begin());
+    }
+    catch(...)
+    {
+        delete [] _data;
+        throw;
+        return;
+    }
 }
 
 
