@@ -236,7 +236,7 @@ TSSArray<T> & TSSArray<T>::operator=(TSSArray && other) noexcept
 {
     if(this != &other)
     {
-        this->.swap(other);
+        this->swap(other);
     }
     return *this; 
 }
