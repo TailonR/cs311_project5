@@ -240,6 +240,39 @@ TSSArray<T> & TSSArray<T>::operator=(TSSArray && other) noexcept
 template<typename T>
 void TSSArray<T>::resize(size_type newsize)
 {
+    if(this->_capacity <= newsize)
+    {
+        this->_size = newsize;
+        return;
+    }
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // TEST For the method of resize then declaring?
+    //
+    // else if(this->_capacity > newsize)
+    // {
+    //    value_type newCapacity = this->._capacity;
+    //    while(true)
+    //    {
+    //         newCapacity = newCapacity * 2;
+    //         if(newCapacity >= newsize)
+    //         {
+    //             break;
+    //         }    
+    //     }
+    //      new value_type newData[newCapacity];
+    //     //now newCapacity is atleast greater than newsize. create an object of _size newsize,
+    //     //_capacity as newCapacity and _data as newData 
+    // }
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    else
+    {
+        TSSArray<T> tempobj(newsize);
+        std::copy(this->begin(), this->end(), tempobj.begin());
+        tempobj._capacity = newsize + 16;
+        this->swap(tempobj);
+        return;
+    }
+
     // TODO: WRITE THIS!!!
 }
 
