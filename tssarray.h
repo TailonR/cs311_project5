@@ -303,7 +303,9 @@ typename TSSArray<T>::iterator TSSArray<T>::erase(TSSArray<T>::iterator pos)
 template<typename T>
 void TSSArray<T>::swap(TSSArray<T> & other) noexcept
 {
-    // TODO: WRITE THIS!!!
+    std::swap(_size, other._size);
+    std::swap(_capacity, other._capacity);
+    std::swap(_data, other._data);
 }
 
 
