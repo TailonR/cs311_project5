@@ -223,7 +223,7 @@ TSSArray<T> & TSSArray<T>::operator=(const TSSArray<T> & other)
     if(this != & other)
     {
         TSSArray copyOfOther(other);
-        this->.swap(copyOfOther);
+        this->swap(copyOfOther);
     }
     return *this; 
 }
