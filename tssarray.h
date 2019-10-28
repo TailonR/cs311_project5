@@ -220,8 +220,12 @@ TSSArray<T>::TSSArray(TSSArray<T> && other) noexcept
 template<typename T>
 TSSArray<T> & TSSArray<T>::operator=(const TSSArray<T> & other)
 {
-    // TODO: WRITE THIS!!!
-    return *this; // DUMMY
+    if(this != & other)
+    {
+        TSSArray copyOfOther(other);
+        this->.swap(copyOfOther);
+    }
+    return *this; 
 }
 
 
