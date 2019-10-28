@@ -275,7 +275,7 @@ void TSSArray<T>::resize(size_type newsize)
     {
         TSSArray tempobj(newsize);
         std::copy(this->begin(), this->end(), tempobj.begin());
-        tempobj._capacity = newsize + 16;
+        tempobj._capacity = newsize * 2;
         this->swap(tempobj);
         return;
     }
@@ -289,7 +289,8 @@ template<typename T>
 typename TSSArray<T>::iterator TSSArray<T>::insert(TSSArray<T>::iterator pos,
                                   const TSSArray<T>::value_type & item)
 {
-    // TODO: WRITE THIS!!!
+    this->resize(_size+1);
+
     return begin();  // DUMMY
 }
 
