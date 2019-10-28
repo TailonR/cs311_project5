@@ -264,15 +264,19 @@ void TSSArray<T>::resize(size_type newsize)
         }
 
         value_type * newData = new value_type[newCap];
-        
-        std::copy(this->begin(), this->end(), newData);
+        try
+        {
+            std::copy(this->begin(), this->end(), newData);
+        } 
+        catch(...)
+        {
+            delete [] newData;
+            throw;
+            return;
+        }
         std::swap(_size, newsize);
         std::swap(_capacity, newCap);
         std::swap(_data, newData);
-        
-        // TSSArray<value_type> tempobj(newsize);
-        // std::copy(this->begin(), this->end(), tempobj.begin());
-        // swap(tempobj);
     }
 
 }
