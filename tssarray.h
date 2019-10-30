@@ -295,7 +295,6 @@ template<typename T>
 typename TSSArray<T>::iterator TSSArray<T>::insert(TSSArray<T>::iterator pos,
                                   const TSSArray<T>::value_type & item)
 {
-	TSSArray<T>::iterator n = pos;
 	size_t index = pos - begin();
 
 	if (pos != end())
