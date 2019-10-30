@@ -205,7 +205,6 @@ TSSArray<T>::TSSArray(const TSSArray<T> & other)
     {
         delete [] _data;
         throw;
-        return;
     }
 }
 
@@ -232,7 +231,7 @@ TSSArray<T> & TSSArray<T>::operator=(const TSSArray<T> & other)
     if(this != & other)
     {
         TSSArray copyOfOther(other);
-        this->swap(copyOfOther);
+        swap(copyOfOther);
     }
     return *this; 
 }
@@ -245,7 +244,7 @@ TSSArray<T> & TSSArray<T>::operator=(TSSArray && other) noexcept
 {
     if(this != &other)
     {
-        this->swap(other);
+        swap(other);
     }
     return *this; 
 }
@@ -262,7 +261,7 @@ void TSSArray<T>::resize(size_type newsize)
     }
     else
     {
-        size_t newCap = _capacity;
+        size_type newCap = _capacity;
         while(true)
         {
             if(newCap > newsize)
@@ -275,15 +274,13 @@ void TSSArray<T>::resize(size_type newsize)
         value_type * newData = new value_type[newCap];
         try
         {
-            std::copy(this->begin(), this->end(), newData);
+            std::copy(begin(), end(), newData);
         } 
         catch(...)
         {
             delete [] newData;
             throw;
         }
-
-
         std::swap(_size, newsize);
         std::swap(_capacity, newCap);
         std::swap(_data, newData);
@@ -305,18 +302,6 @@ typename TSSArray<T>::iterator TSSArray<T>::insert(TSSArray<T>::iterator pos,
 	{
 		_data[_size] = item;
 		resize(_size + 1);
-
-
-		//********PRINT Check - checking array after resize *****************//
-		///**/ std::cout << "After resize:  ";
-		///**/ for (size_t i = 0; i < size(); i++)
-		///**/ {
-		///**/	std::cout << _data[i] << "  ";
-		///**/	if (i == size() - 1)
-		///**/		std::cout << "\n" << std::endl;
-		///**/ }
-		//********End of PRINT Check ************************************//
-
 		std::rotate(pos, end() - 1, end());
 	}
 	else
@@ -324,12 +309,7 @@ typename TSSArray<T>::iterator TSSArray<T>::insert(TSSArray<T>::iterator pos,
 		resize(_size + 1);
 		_data[index] = item;
 	}
-
-	//TSSArray<T>::iterator newIterator = begin()+savedIndex;
-	//*newIterator = _data[savedIndex];
-
-
-	return begin() + index;  // DUMMY
+	return begin() + index; 
 }
 
 
@@ -339,8 +319,8 @@ template<typename T>
 typename TSSArray<T>::iterator TSSArray<T>::erase(TSSArray<T>::iterator pos)
 { 
 	std::rotate(pos, pos+1, end());
-	this->resize(_size - 1);
-	return pos;  // DUMMY
+	resize(_size - 1);
+	return pos; 
 }
 
 
