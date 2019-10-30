@@ -298,49 +298,31 @@ template<typename T>
 typename TSSArray<T>::iterator TSSArray<T>::insert(TSSArray<T>::iterator pos,
                                   const TSSArray<T>::value_type & item)
 {
-	//***PRINT Check - Checking array before insert and distance between pos and end() and what pos is **********//
-	/**/ std::cout << "Pre:  ";
-	/**/ for (size_t i = 0; i < size(); i++)
-	/**/ {
-	/**/	 std::cout << _data[i] << "  ";
-	/**/	if (i == size() - 1)
-	/**/	{
-	/**/ 		std::cout << "\n pos - end(): " << pos - end() << "  ";
-	/**/ 		std::cout << "pos - begin(): " << pos - begin() << std::endl;
-	/**/ 		std::cout << "\n" << std::endl;
-	/**/	}
-	/**/ }
-	//********End of PRINT Check *********************************************//
-
-	this->resize(_size + 1);
-	*pos = item;
-
-	//********PRINT Check - checking array after insert and resize*****************//
-	/**/ std::cout << "From pos==end():  ";
-	/**/ for (size_t i = 0; i < size(); i++)
-	/**/ {
-	/**/	std::cout << _data[i] << "  ";
-	/**/	if (i == size() - 1)
-	/**/		std::cout << "\n" << std::endl;
-	/**/ }
-	//********End of PRINT Check ************************************//
+	TSSArray<T>::iterator n = end();
 
 	if (pos != end())
 	{
-		std::rotate(pos, end() - 1, end());
+		*n = item;
+		resize(_size + 1);
 
+
+		//********PRINT Check - checking array after resize *****************//
+		///**/ std::cout << "After resize:  ";
+		///**/ for (size_t i = 0; i < size(); i++)
+		///**/ {
+		///**/	std::cout << _data[i] << "  ";
+		///**/	if (i == size() - 1)
+		///**/		std::cout << "\n" << std::endl;
+		///**/ }
+		//********End of PRINT Check ************************************//
+
+		std::rotate(pos, end() - 1, end());
 	}
-	
-	//********PRINT Check - checking array after rotate *****************//
-	/**/ std::cout << "Post:  ";
-	/**/ for (size_t i = 0; i < size(); i++)
-	/**/ {
-	/**/	std::cout << _data[i] << "  ";
-	/**/	if (i == size() - 1)
-	/**/		std::cout << "\n" << std::endl;
-	/**/ }
-	/**/std::cout << "\n" << std::endl;
-	//********End of PRINT Check ***************************************//
+	else
+	{
+		resize(_size + 1);
+		*pos = item;
+	}
 
 	//TSSArray<T>::iterator newIterator = begin()+savedIndex;
 	//*newIterator = _data[savedIndex];
