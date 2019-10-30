@@ -298,11 +298,12 @@ template<typename T>
 typename TSSArray<T>::iterator TSSArray<T>::insert(TSSArray<T>::iterator pos,
                                   const TSSArray<T>::value_type & item)
 {
-	TSSArray<T>::iterator n = end();
+	TSSArray<T>::iterator n = pos;
+	size_t index = pos - begin();
 
 	if (pos != end())
 	{
-		*n = item;
+		_data[_size] = item;
 		resize(_size + 1);
 
 
@@ -321,14 +322,14 @@ typename TSSArray<T>::iterator TSSArray<T>::insert(TSSArray<T>::iterator pos,
 	else
 	{
 		resize(_size + 1);
-		*pos = item;
+		_data[index] = item;
 	}
 
 	//TSSArray<T>::iterator newIterator = begin()+savedIndex;
 	//*newIterator = _data[savedIndex];
 
 
-	return pos;  // DUMMY
+	return begin() + index;  // DUMMY
 }
 
 
