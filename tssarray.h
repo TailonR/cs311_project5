@@ -20,6 +20,7 @@
 #include <algorithm>
 // For std::max std::copy std::swap
 
+#include <iostream>
 
 // *********************************************************************
 // class TSSArray - Class definition
@@ -280,8 +281,9 @@ void TSSArray<T>::resize(size_type newsize)
         {
             delete [] newData;
             throw;
-            return;
         }
+
+
         std::swap(_size, newsize);
         std::swap(_capacity, newCap);
         std::swap(_data, newData);
@@ -296,9 +298,55 @@ template<typename T>
 typename TSSArray<T>::iterator TSSArray<T>::insert(TSSArray<T>::iterator pos,
                                   const TSSArray<T>::value_type & item)
 {
-    this->resize(_size+1);
+	//***PRINT Check - Checking array before insert and distance between pos and end() and what pos is **********//
+	/**/ std::cout << "Pre:  ";
+	/**/ for (size_t i = 0; i < size(); i++)
+	/**/ {
+	/**/	 std::cout << _data[i] << "  ";
+	/**/	if (i == size() - 1)
+	/**/	{
+	/**/ 		std::cout << "\n pos - end(): " << pos - end() << "  ";
+	/**/ 		std::cout << "pos - begin(): " << pos - begin() << std::endl;
+	/**/ 		std::cout << "\n" << std::endl;
+	/**/	}
+	/**/ }
+	//********End of PRINT Check *********************************************//
 
-    return begin();  // DUMMY
+	this->resize(_size + 1);
+	*pos = item;
+
+	//********PRINT Check - checking array after insert and resize*****************//
+	/**/ std::cout << "From pos==end():  ";
+	/**/ for (size_t i = 0; i < size(); i++)
+	/**/ {
+	/**/	std::cout << _data[i] << "  ";
+	/**/	if (i == size() - 1)
+	/**/		std::cout << "\n" << std::endl;
+	/**/ }
+	//********End of PRINT Check ************************************//
+
+	if (pos != end())
+	{
+		std::rotate(pos, end() - 1, end());
+
+	}
+	
+	//********PRINT Check - checking array after rotate *****************//
+	/**/ std::cout << "Post:  ";
+	/**/ for (size_t i = 0; i < size(); i++)
+	/**/ {
+	/**/	std::cout << _data[i] << "  ";
+	/**/	if (i == size() - 1)
+	/**/		std::cout << "\n" << std::endl;
+	/**/ }
+	/**/std::cout << "\n" << std::endl;
+	//********End of PRINT Check ***************************************//
+
+	//TSSArray<T>::iterator newIterator = begin()+savedIndex;
+	//*newIterator = _data[savedIndex];
+
+
+	return pos;  // DUMMY
 }
 
 
@@ -306,9 +354,10 @@ typename TSSArray<T>::iterator TSSArray<T>::insert(TSSArray<T>::iterator pos,
 // See header for docs.
 template<typename T>
 typename TSSArray<T>::iterator TSSArray<T>::erase(TSSArray<T>::iterator pos)
-{
-    // TODO: WRITE THIS!!!
-    return begin();  // DUMMY
+{ 
+	std::rotate(pos, pos+1, end());
+	this->resize(_size - 1);
+	return pos;  // DUMMY
 }
 
 
