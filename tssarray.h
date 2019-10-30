@@ -35,6 +35,8 @@
 //     _data points to an array of int, allocated with new[], owned by
 //      *this, holding _size ints -- UNLESS _capacity == 0, which case
 //      _data may be nullptr.
+// 
+
 template <typename T>
 class TSSArray {
 
@@ -62,6 +64,8 @@ public:
 
     // Default ctor & ctor from size
     // Strong Guarantee
+    // Creates the base array with capacity = max(size and defualt cap). 
+    // The default size is 0, capacity is 16.
     explicit TSSArray(size_type size=0)
         :_capacity(std::max(size, size_type(DEFAULT_CAP))),
             // _capacity must be declared before _data
@@ -69,16 +73,22 @@ public:
          _data(new value_type[_capacity])
     {}
 
-    // Copy ctor
+    // Copy ctor: Performs a deep copy via std::copy from <algorithm>, 
+    // creats a new: capacity, size, and data array.
     // Strong Guarantee
+    // PRE: Begin and End bust be defined.
+    // ERROR: Try and catch all. Clean up newly created data array,
+    // re-throw the error to client.
     TSSArray(const TSSArray & other);
 
     // Move ctor
     // No-Throw Guarantee
+    // PRE: swap must be defined for object T.
     TSSArray(TSSArray && other) noexcept;
 
     // Dctor
     // No-Throw Guarantee
+    // PRE: NONE
     ~TSSArray()
     {
         delete [] _data;
@@ -86,10 +96,14 @@ public:
 
     // Copy assignment
     // ??? Guarantee
+    // PRE: Swap must be defined for object T
+    // POST: Assigns object to this
+    // ERROR: An error will occur if copy fails 
     TSSArray & operator=(const TSSArray & rhs);
 
     // Move assignment
     // No-Throw Guarantee
+    // PRE: Swap must be defined for object T
     TSSArray & operator=(TSSArray && rhs) noexcept;
 
 // ***** TSSArray: general public operators *****
@@ -97,10 +111,12 @@ public:
 
     // Operator[] - non-const & const
     // No-Throw Guarantee
+    // PRE: Must be not const
     value_type & operator[](size_type index) noexcept
     {
         return _data[index];
     }
+    //PRE: Must be a const
     const value_type & operator[](size_type index) const noexcept
     {
         return _data[index];
@@ -213,13 +229,11 @@ TSSArray<T>::TSSArray(const TSSArray<T> & other)
 // See header for docs.
 template<typename T>
 TSSArray<T>::TSSArray(TSSArray<T> && other) noexcept
-    :_capacity(other._capacity),
-     _size(other._size),
-     _data(other._data)
+    :_capacity(0),
+     _size(0),
+     _data(nullptr)
 {
-    other._capacity = 0;
-    other._size = 0;
-    other._data = nullptr;
+    swap(other);
 }
 
 
@@ -228,11 +242,8 @@ TSSArray<T>::TSSArray(TSSArray<T> && other) noexcept
 template<typename T>
 TSSArray<T> & TSSArray<T>::operator=(const TSSArray<T> & other)
 {
-    if(this != & other)
-    {
-        TSSArray copyOfOther(other);
-        swap(copyOfOther);
-    }
+    TSSArray copyOfOther(other);
+    swap(copyOfOther);
     return *this; 
 }
 
@@ -242,10 +253,7 @@ TSSArray<T> & TSSArray<T>::operator=(const TSSArray<T> & other)
 template<typename T>
 TSSArray<T> & TSSArray<T>::operator=(TSSArray && other) noexcept
 {
-    if(this != &other)
-    {
-        swap(other);
-    }
+    swap(other);
     return *this; 
 }
 
