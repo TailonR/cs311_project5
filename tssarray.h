@@ -175,7 +175,7 @@ public:
 
     // erase
     // Basic Gaarantee
-    // PRE: Pos must be in a valid range for the array.
+    // PRE: Pos must be in a valid range for the array, and Array must be of atleast size 1;
     iterator erase(iterator pos);
 
     // push_back
@@ -187,6 +187,7 @@ public:
 
     // pop_back
     // Basic Gaarantee
+    // PRE: Size of the array must be atleast 1
     void pop_back()
     {   
         erase(end()-1);
@@ -328,13 +329,9 @@ typename TSSArray<T>::iterator TSSArray<T>::insert(TSSArray<T>::iterator pos,
 template<typename T>
 typename TSSArray<T>::iterator TSSArray<T>::erase(TSSArray<T>::iterator pos)
 { 
-    if(size() != 0)
-    {
-        std::rotate(pos, pos+1, end());
-        resize(_size - 1);
-        return pos; 
-    }
-	return 1;
+    std::rotate(pos, pos+1, end());
+    resize(_size - 1);
+    return pos; 
 }
 
 
