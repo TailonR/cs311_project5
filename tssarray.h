@@ -112,7 +112,7 @@ public:
 
     // Operator[] - non-const & const
     // No-Throw Guarantee
-    // PRE: Must be not const
+    // PRE: Must be not const must give an valid index to access from 0 to size()
     value_type & operator[](size_type index) noexcept
     {
         return _data[index];
@@ -188,7 +188,7 @@ public:
     // pop_back
     // Basic Gaarantee
     void pop_back()
-    {
+    {   
         erase(end()-1);
     }
 
@@ -328,9 +328,13 @@ typename TSSArray<T>::iterator TSSArray<T>::insert(TSSArray<T>::iterator pos,
 template<typename T>
 typename TSSArray<T>::iterator TSSArray<T>::erase(TSSArray<T>::iterator pos)
 { 
-	std::rotate(pos, pos+1, end());
-	resize(_size - 1);
-	return pos; 
+    if(size() != 0)
+    {
+        std::rotate(pos, pos+1, end());
+        resize(_size - 1);
+        return pos; 
+    }
+	return 1;
 }
 
 
