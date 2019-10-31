@@ -35,7 +35,8 @@
 //     _data points to an array of int, allocated with new[], owned by
 //      *this, holding _size ints -- UNLESS _capacity == 0, which case
 //      _data may be nullptr.
-// 
+// Type Requirements:
+//      T must have copy ctor, copy assignemnt, dtor, swap.
 
 template <typename T>
 class TSSArray {
