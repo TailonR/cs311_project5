@@ -3,13 +3,13 @@
 //Matt Perry
 //Tailon Russell
 //Started: 10/25/2019
-//Finsihed:
+//Finsihed: 10/30/2019
 //
 //
 // Template used from ssarray.h created by Glenn G. Chappell
 
 //For CS 311 Fall 2019
-//Header for class TTSSArray
+//Header File for class TTSSArray
 //Templated Seriously Smart Array
 //Project 5
 #ifndef FILE_TSSArray_H_INCLUDED
@@ -95,7 +95,7 @@ public:
     }
 
     // Copy assignment
-    // ??? Guarantee
+    // Basic Guarantee
     // PRE: Swap must be defined for object T
     // POST: Assigns object to this
     // ERROR: An error will occur if copy fails 
@@ -162,27 +162,30 @@ public:
     }
 
     // resize
-    // ??? Guarantee
+    // Basic Gaarantee
+    // PRE: newsize must follow the rules of _size for the class
     void resize(size_type newsize);
 
     // insert
-    // ??? Guarantee
+    // Basic Gaarantee
+    // PRE: Pos must be in a valid range for the array.
     iterator insert(iterator pos,
                     const value_type & item);
 
     // erase
-    // ??? Guarantee
+    // Basic Gaarantee
+    // PRE: Pos must be in a valid range for the array.
     iterator erase(iterator pos);
 
     // push_back
-    // ??? Guarantee
+    // Basic Gaarantee
     void push_back(const value_type & item)
     {
         insert(end(), item);
     }
 
     // pop_back
-    // ??? Guarantee
+    // Basic Gaarantee
     void pop_back()
     {
         erase(end()-1);
